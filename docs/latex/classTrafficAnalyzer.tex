@@ -1,0 +1,172 @@
+\hypertarget{classTrafficAnalyzer}{\section{Traffic\-Analyzer Class Reference}
+\label{classTrafficAnalyzer}\index{Traffic\-Analyzer@{Traffic\-Analyzer}}
+}
+
+
+Used by the watchdogs to handle all processing of packet data.  
+
+
+
+
+{\ttfamily \#include $<$traffic\-\_\-analyzer.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structTrafficAnalyzer_1_1TrafficData}{Traffic\-Data}
+\begin{DoxyCompactList}\small\item\em Internal struct within Traffic\-Analuyzer containing a number of packets/bytes and list of flows. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrafficAnalyzer_a9216a001cdfbdf97f40338053a434271}{Traffic\-Analyzer} (const string \&logfile)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classTrafficAnalyzer_ab7007a89e1a7be25847ce43818cf14ed}{Add\-Packet} (const \hyperlink{structPacketInfo}{Packet\-Info} \&p)
+\begin{DoxyCompactList}\small\item\em Adds packet to be processed. \end{DoxyCompactList}\item 
+string \hyperlink{classTrafficAnalyzer_a2b8c62dbaa795490d08274eac4c53e57}{Generate\-Report} ()
+\begin{DoxyCompactList}\small\item\em Generates and returns a report about all traffic data since last call to \hyperlink{classTrafficAnalyzer_a2b8c62dbaa795490d08274eac4c53e57}{Generate\-Report()} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classTrafficAnalyzer_afb932f1bf1ba2d94e8c69db63d126d61}{Log\-Message} (const string \&msg) const 
+\begin{DoxyCompactList}\small\item\em Appends a message to m\-\_\-logfile and console. \end{DoxyCompactList}\item 
+bool \hyperlink{classTrafficAnalyzer_ab9ff1c97d41edcaa638d3d4afb658f19}{Check\-Alert} (const \hyperlink{structTrafficAnalyzer_1_1TrafficData}{Traffic\-Data} \&traffic\-Data, bool alert\-Flags\mbox{[}3\mbox{]}) const 
+\begin{DoxyCompactList}\small\item\em Checks traffic data to see if an alert has been generated. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{classTrafficAnalyzer_add716c01da39c385a97a311b465deeb4}{m\-\_\-logfile}
+\item 
+map$<$ string, \hyperlink{structTrafficAnalyzer_1_1TrafficData}{Traffic\-Data} $>$ \hyperlink{classTrafficAnalyzer_aabed7c9e5a09fdddd78bbf797e267a2f}{m\-\_\-dst\-Traffic\-Map}
+\item 
+\hyperlink{structTrafficAnalyzer_1_1TrafficData}{Traffic\-Data} \hyperlink{classTrafficAnalyzer_a734268651e33bf00e26314039c7d2647}{m\-\_\-prev\-Data}
+\item 
+int \hyperlink{classTrafficAnalyzer_aedc4b5279b06fa8b9cefeedcbddcfb74}{m\-\_\-reports\-Generated}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used by the watchdogs to handle all processing of packet data. 
+
+Takes packets as input via \hyperlink{classTrafficAnalyzer_ab7007a89e1a7be25847ce43818cf14ed}{Add\-Packet()} method, then generates a report via the \hyperlink{classTrafficAnalyzer_a2b8c62dbaa795490d08274eac4c53e57}{Generate\-Report()} method. Packet data is stored within a \hyperlink{structTrafficAnalyzer_1_1TrafficData}{Traffic\-Data} struct (declared as a private member within \hyperlink{classTrafficAnalyzer}{Traffic\-Analyzer}). Packet data is accumulated per destination and stored within the m\-\_\-dst\-Traffic\-Map (that is, there is one \hyperlink{structTrafficAnalyzer_1_1TrafficData}{Traffic\-Data} instance per destination I\-P Address containing the total sum of bytes/packets/flows for all packets added with that destination I\-P). This allows \hyperlink{classTrafficAnalyzer}{Traffic\-Analyzer} to easily determine the offending destination I\-P in the event that an alert is detected.
+
+Once the \hyperlink{classTrafficAnalyzer_a2b8c62dbaa795490d08274eac4c53e57}{Generate\-Report()} method is called (at the end of each timeslice), a report is generated with all data within the m\-\_\-dst\-Traffic\-Map and saved to the m\-\_\-prev\-Data member variable. The m\-\_\-dst\-Traffic\-Map is then cleared. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classTrafficAnalyzer_a9216a001cdfbdf97f40338053a434271}{\index{Traffic\-Analyzer@{Traffic\-Analyzer}!Traffic\-Analyzer@{Traffic\-Analyzer}}
+\index{Traffic\-Analyzer@{Traffic\-Analyzer}!TrafficAnalyzer@{Traffic\-Analyzer}}
+\subsubsection[{Traffic\-Analyzer}]{\setlength{\rightskip}{0pt plus 5cm}Traffic\-Analyzer\-::\-Traffic\-Analyzer (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{logfile}
+\end{DoxyParamCaption}
+)}}\label{classTrafficAnalyzer_a9216a001cdfbdf97f40338053a434271}
+
+
+Constructor. 
+
+Initializes \hyperlink{classTrafficAnalyzer}{Traffic\-Analyzer} instance with number of watchdogs to connect to and the name of file to log to.
+
+
+\begin{DoxyParams}{Parameters}
+{\em logfile} & Name of the logfile that relevent info will be logged to \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classTrafficAnalyzer_ab7007a89e1a7be25847ce43818cf14ed}{\index{Traffic\-Analyzer@{Traffic\-Analyzer}!Add\-Packet@{Add\-Packet}}
+\index{Add\-Packet@{Add\-Packet}!TrafficAnalyzer@{Traffic\-Analyzer}}
+\subsubsection[{Add\-Packet}]{\setlength{\rightskip}{0pt plus 5cm}void Traffic\-Analyzer\-::\-Add\-Packet (
+\begin{DoxyParamCaption}
+\item[{const {\bf Packet\-Info} \&}]{p}
+\end{DoxyParamCaption}
+)}}\label{classTrafficAnalyzer_ab7007a89e1a7be25847ce43818cf14ed}
+
+
+Adds packet to be processed. 
+
+Adds a packet to be processed. First determines the flow of the packet, then adds the packet to the Traffic\-Map instance corresponding the packets destination.
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & \hyperlink{structPacketInfo}{Packet\-Info} struct storing all relevent metadata from a packet \\
+\hline
+\end{DoxyParams}
+\hypertarget{classTrafficAnalyzer_ab9ff1c97d41edcaa638d3d4afb658f19}{\index{Traffic\-Analyzer@{Traffic\-Analyzer}!Check\-Alert@{Check\-Alert}}
+\index{Check\-Alert@{Check\-Alert}!TrafficAnalyzer@{Traffic\-Analyzer}}
+\subsubsection[{Check\-Alert}]{\setlength{\rightskip}{0pt plus 5cm}bool Traffic\-Analyzer\-::\-Check\-Alert (
+\begin{DoxyParamCaption}
+\item[{const {\bf Traffic\-Data} \&}]{traffic\-Data, }
+\item[{bool}]{alert\-Flags\mbox{[}3\mbox{]}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [private]}}}\label{classTrafficAnalyzer_ab9ff1c97d41edcaa638d3d4afb658f19}
+
+
+Checks traffic data to see if an alert has been generated. 
+
+Called internally by \hyperlink{classTrafficAnalyzer_a2b8c62dbaa795490d08274eac4c53e57}{Generate\-Report()} method. Checks traffic\-Data against data from the previous report (stored in member variable m\-\_\-prev\-Data) to see if traffic is anomolous. If traffic\-Data has more than 3x as many packets, alerts, or flows as m\-\_\-prev\-Data, an an alert is detected and alert\-Flags are set accordingly (indicating whether the alert was due to packets, bytes, and/or flows).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em traffic\-Data} & The traffic data to scan for anomolous data \\
+\hline
+\mbox{\tt out}  & {\em alert\-Flags} & An array of three bools (whose indices correspond to the Alert\-Type enum) that are set to T\-R\-U\-E if an alert was detected for that category (e.\-g. packets/bytes/flows)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+T\-R\-U\-E if an alert was detected and F\-A\-L\-S\-E otherwise 
+\end{DoxyReturn}
+\hypertarget{classTrafficAnalyzer_a2b8c62dbaa795490d08274eac4c53e57}{\index{Traffic\-Analyzer@{Traffic\-Analyzer}!Generate\-Report@{Generate\-Report}}
+\index{Generate\-Report@{Generate\-Report}!TrafficAnalyzer@{Traffic\-Analyzer}}
+\subsubsection[{Generate\-Report}]{\setlength{\rightskip}{0pt plus 5cm}string Traffic\-Analyzer\-::\-Generate\-Report (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classTrafficAnalyzer_a2b8c62dbaa795490d08274eac4c53e57}
+
+
+Generates and returns a report about all traffic data since last call to \hyperlink{classTrafficAnalyzer_a2b8c62dbaa795490d08274eac4c53e57}{Generate\-Report()} 
+
+To be called at the end of each timeslice. Sums data from all packets added (via \hyperlink{classTrafficAnalyzer_ab7007a89e1a7be25847ce43818cf14ed}{Add\-Packet()} method) since the last call to \hyperlink{classTrafficAnalyzer_a2b8c62dbaa795490d08274eac4c53e57}{Generate\-Report()}. The total traffic data for this time slice is then checked for alerts (via \hyperlink{classTrafficAnalyzer_ab9ff1c97d41edcaa638d3d4afb658f19}{Check\-Alert()} method) and a report is generated and returned.
+
+Before returning, the m\-\_\-dst\-Traffic\-Map member variable is cleared out and the traffic data totals are saved into the m\-\_\-prev\-Data member variable.
+
+\begin{DoxyReturn}{Returns}
+The traffic report for all packets added since last call to \hyperlink{classTrafficAnalyzer_a2b8c62dbaa795490d08274eac4c53e57}{Generate\-Report()} 
+\end{DoxyReturn}
+\hypertarget{classTrafficAnalyzer_afb932f1bf1ba2d94e8c69db63d126d61}{\index{Traffic\-Analyzer@{Traffic\-Analyzer}!Log\-Message@{Log\-Message}}
+\index{Log\-Message@{Log\-Message}!TrafficAnalyzer@{Traffic\-Analyzer}}
+\subsubsection[{Log\-Message}]{\setlength{\rightskip}{0pt plus 5cm}void Traffic\-Analyzer\-::\-Log\-Message (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{msg}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [private]}}}\label{classTrafficAnalyzer_afb932f1bf1ba2d94e8c69db63d126d61}
+
+
+Appends a message to m\-\_\-logfile and console. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & The message to be written to m\-\_\-logfile and console. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classTrafficAnalyzer_aabed7c9e5a09fdddd78bbf797e267a2f}{\index{Traffic\-Analyzer@{Traffic\-Analyzer}!m\-\_\-dst\-Traffic\-Map@{m\-\_\-dst\-Traffic\-Map}}
+\index{m\-\_\-dst\-Traffic\-Map@{m\-\_\-dst\-Traffic\-Map}!TrafficAnalyzer@{Traffic\-Analyzer}}
+\subsubsection[{m\-\_\-dst\-Traffic\-Map}]{\setlength{\rightskip}{0pt plus 5cm}map$<$string, {\bf Traffic\-Data}$>$ Traffic\-Analyzer\-::m\-\_\-dst\-Traffic\-Map\hspace{0.3cm}{\ttfamily [private]}}}\label{classTrafficAnalyzer_aabed7c9e5a09fdddd78bbf797e267a2f}
+Total traffic data for this timeslice (seperated and mapped by dst) \hypertarget{classTrafficAnalyzer_add716c01da39c385a97a311b465deeb4}{\index{Traffic\-Analyzer@{Traffic\-Analyzer}!m\-\_\-logfile@{m\-\_\-logfile}}
+\index{m\-\_\-logfile@{m\-\_\-logfile}!TrafficAnalyzer@{Traffic\-Analyzer}}
+\subsubsection[{m\-\_\-logfile}]{\setlength{\rightskip}{0pt plus 5cm}string Traffic\-Analyzer\-::m\-\_\-logfile\hspace{0.3cm}{\ttfamily [private]}}}\label{classTrafficAnalyzer_add716c01da39c385a97a311b465deeb4}
+The name of the file to log to \hypertarget{classTrafficAnalyzer_a734268651e33bf00e26314039c7d2647}{\index{Traffic\-Analyzer@{Traffic\-Analyzer}!m\-\_\-prev\-Data@{m\-\_\-prev\-Data}}
+\index{m\-\_\-prev\-Data@{m\-\_\-prev\-Data}!TrafficAnalyzer@{Traffic\-Analyzer}}
+\subsubsection[{m\-\_\-prev\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Traffic\-Data} Traffic\-Analyzer\-::m\-\_\-prev\-Data\hspace{0.3cm}{\ttfamily [private]}}}\label{classTrafficAnalyzer_a734268651e33bf00e26314039c7d2647}
+Total accumulated traffic data from the previous timeslice \hypertarget{classTrafficAnalyzer_aedc4b5279b06fa8b9cefeedcbddcfb74}{\index{Traffic\-Analyzer@{Traffic\-Analyzer}!m\-\_\-reports\-Generated@{m\-\_\-reports\-Generated}}
+\index{m\-\_\-reports\-Generated@{m\-\_\-reports\-Generated}!TrafficAnalyzer@{Traffic\-Analyzer}}
+\subsubsection[{m\-\_\-reports\-Generated}]{\setlength{\rightskip}{0pt plus 5cm}int Traffic\-Analyzer\-::m\-\_\-reports\-Generated\hspace{0.3cm}{\ttfamily [private]}}}\label{classTrafficAnalyzer_aedc4b5279b06fa8b9cefeedcbddcfb74}
+Number of reports that have been generated 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/alexander/\-Projects/\-N\-I\-D\-S/src/watchdog/traffic\-\_\-analyzer.\-h\item 
+/home/alexander/\-Projects/\-N\-I\-D\-S/src/watchdog/traffic\-\_\-analyzer.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,107 @@
+\hypertarget{structTrafficAnalyzer_1_1TrafficData}{\section{Traffic\-Analyzer\-:\-:Traffic\-Data Struct Reference}
+\label{structTrafficAnalyzer_1_1TrafficData}\index{Traffic\-Analyzer\-::\-Traffic\-Data@{Traffic\-Analyzer\-::\-Traffic\-Data}}
+}
+
+
+Internal struct within Traffic\-Analuyzer containing a number of packets/bytes and list of flows.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structTrafficAnalyzer_1_1TrafficData_a3e373b30f721e4b14046a9511d35af89}{\hyperlink{structTrafficAnalyzer_1_1TrafficData_a3e373b30f721e4b14046a9511d35af89}{Traffic\-Data} ()}\label{structTrafficAnalyzer_1_1TrafficData_a3e373b30f721e4b14046a9511d35af89}
+
+\begin{DoxyCompactList}\small\item\em Constructor Initializes packets and bytes to 0. \end{DoxyCompactList}\item 
+void \hyperlink{structTrafficAnalyzer_1_1TrafficData_a45f1d719c909021be8a9e8091e4e8da9}{Add\-Packet\-Data} (int size, flow\-\_\-t flow)
+\begin{DoxyCompactList}\small\item\em Adds packet data to the existing counts. \end{DoxyCompactList}\item 
+\hyperlink{structTrafficAnalyzer_1_1TrafficData}{Traffic\-Data} \& \hyperlink{structTrafficAnalyzer_1_1TrafficData_aa00c8d3955c1a0d52bed31bc2571e72a}{operator+=} (const \hyperlink{structTrafficAnalyzer_1_1TrafficData}{Traffic\-Data} \&rhs)
+\item 
+const \hyperlink{structTrafficAnalyzer_1_1TrafficData}{Traffic\-Data} \hyperlink{structTrafficAnalyzer_1_1TrafficData_a1b7bc57a523e361535aa9c99ca6397e9}{operator+} (const \hyperlink{structTrafficAnalyzer_1_1TrafficData}{Traffic\-Data} \&rhs) const 
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{structTrafficAnalyzer_1_1TrafficData_ab71ce320ed4920dcb96ed06048c7b71f}{packets}
+\item 
+int \hyperlink{structTrafficAnalyzer_1_1TrafficData_a216da5ddb1faa2ee2c900300a532b4df}{bytes}
+\item 
+vector$<$ flow\-\_\-t $>$ \hyperlink{structTrafficAnalyzer_1_1TrafficData_a76f38620516933ff56687ce8747db952}{flows}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Internal struct within Traffic\-Analuyzer containing a number of packets/bytes and list of flows. 
+
+\subsection{Member Function Documentation}
+\hypertarget{structTrafficAnalyzer_1_1TrafficData_a45f1d719c909021be8a9e8091e4e8da9}{\index{Traffic\-Analyzer\-::\-Traffic\-Data@{Traffic\-Analyzer\-::\-Traffic\-Data}!Add\-Packet\-Data@{Add\-Packet\-Data}}
+\index{Add\-Packet\-Data@{Add\-Packet\-Data}!TrafficAnalyzer::TrafficData@{Traffic\-Analyzer\-::\-Traffic\-Data}}
+\subsubsection[{Add\-Packet\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Traffic\-Analyzer\-::\-Traffic\-Data\-::\-Add\-Packet\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{size, }
+\item[{flow\-\_\-t}]{flow}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structTrafficAnalyzer_1_1TrafficData_a45f1d719c909021be8a9e8091e4e8da9}
+
+
+Adds packet data to the existing counts. 
+
+Increments packet count and adds packet size to the bytes count, then adds the packet's flow to the list of flows if it does not already exist within the flows list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & size of the packet in bytes. \\
+\hline
+{\em flow} & the packet's flow. \\
+\hline
+\end{DoxyParams}
+\hypertarget{structTrafficAnalyzer_1_1TrafficData_a1b7bc57a523e361535aa9c99ca6397e9}{\index{Traffic\-Analyzer\-::\-Traffic\-Data@{Traffic\-Analyzer\-::\-Traffic\-Data}!operator+@{operator+}}
+\index{operator+@{operator+}!TrafficAnalyzer::TrafficData@{Traffic\-Analyzer\-::\-Traffic\-Data}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Traffic\-Data} Traffic\-Analyzer\-::\-Traffic\-Data\-::operator+ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Traffic\-Data} \&}]{rhs}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structTrafficAnalyzer_1_1TrafficData_a1b7bc57a523e361535aa9c99ca6397e9}
+Overload of the addition operator (see operator+= overload for explanation)
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & the right hand side addend to be summed with this\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the sum of this + rhs 
+\end{DoxyReturn}
+\hypertarget{structTrafficAnalyzer_1_1TrafficData_aa00c8d3955c1a0d52bed31bc2571e72a}{\index{Traffic\-Analyzer\-::\-Traffic\-Data@{Traffic\-Analyzer\-::\-Traffic\-Data}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!TrafficAnalyzer::TrafficData@{Traffic\-Analyzer\-::\-Traffic\-Data}}
+\subsubsection[{operator+=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Traffic\-Data}\& Traffic\-Analyzer\-::\-Traffic\-Data\-::operator+= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Traffic\-Data} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structTrafficAnalyzer_1_1TrafficData_aa00c8d3955c1a0d52bed31bc2571e72a}
+Overload of the addition assignment operator, adds packet and byte counts of rhs to this, and concatenates rhs's flows list to this flows list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & the right hand side \hyperlink{structTrafficAnalyzer_1_1TrafficData}{Traffic\-Data} instance to add to this\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to the sum of this += rhs 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structTrafficAnalyzer_1_1TrafficData_a216da5ddb1faa2ee2c900300a532b4df}{\index{Traffic\-Analyzer\-::\-Traffic\-Data@{Traffic\-Analyzer\-::\-Traffic\-Data}!bytes@{bytes}}
+\index{bytes@{bytes}!TrafficAnalyzer::TrafficData@{Traffic\-Analyzer\-::\-Traffic\-Data}}
+\subsubsection[{bytes}]{\setlength{\rightskip}{0pt plus 5cm}int Traffic\-Analyzer\-::\-Traffic\-Data\-::bytes}}\label{structTrafficAnalyzer_1_1TrafficData_a216da5ddb1faa2ee2c900300a532b4df}
+Sum of the size of all packets added (in bytes) \hypertarget{structTrafficAnalyzer_1_1TrafficData_a76f38620516933ff56687ce8747db952}{\index{Traffic\-Analyzer\-::\-Traffic\-Data@{Traffic\-Analyzer\-::\-Traffic\-Data}!flows@{flows}}
+\index{flows@{flows}!TrafficAnalyzer::TrafficData@{Traffic\-Analyzer\-::\-Traffic\-Data}}
+\subsubsection[{flows}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$flow\-\_\-t$>$ Traffic\-Analyzer\-::\-Traffic\-Data\-::flows}}\label{structTrafficAnalyzer_1_1TrafficData_a76f38620516933ff56687ce8747db952}
+List of unique flows added \hypertarget{structTrafficAnalyzer_1_1TrafficData_ab71ce320ed4920dcb96ed06048c7b71f}{\index{Traffic\-Analyzer\-::\-Traffic\-Data@{Traffic\-Analyzer\-::\-Traffic\-Data}!packets@{packets}}
+\index{packets@{packets}!TrafficAnalyzer::TrafficData@{Traffic\-Analyzer\-::\-Traffic\-Data}}
+\subsubsection[{packets}]{\setlength{\rightskip}{0pt plus 5cm}int Traffic\-Analyzer\-::\-Traffic\-Data\-::packets}}\label{structTrafficAnalyzer_1_1TrafficData_ab71ce320ed4920dcb96ed06048c7b71f}
+Number of packets added 
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/alexander/\-Projects/\-N\-I\-D\-S/src/watchdog/traffic\-\_\-analyzer.\-h\end{DoxyCompactItemize}

@@ -1,0 +1,218 @@
+\hypertarget{classConnectionManager}{\section{Connection\-Manager Class Reference}
+\label{classConnectionManager}\index{Connection\-Manager@{Connection\-Manager}}
+}
+
+
+Used by the desman to establish and maintain all connections/communications with watchdog clients.  
+
+
+
+
+{\ttfamily \#include $<$connection\-\_\-manager.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classConnectionManager_a1d24557006d4a5d2745952148d61037e}{Connection\-Manager} (int num\-W\-Ds, string logfile)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classConnectionManager_aeed94353d6c54ffe670d7d5b7482a6d2}{Establish\-W\-D\-Connections} ()
+\begin{DoxyCompactList}\small\item\em Establishes connection to all watchdogs, returning T\-R\-U\-E after all W\-D's successfully connected. \end{DoxyCompactList}\item 
+bool \hyperlink{classConnectionManager_a25ebd721d4e133f1dfc4141d8ed8071f}{Send\-Start\-Signal} () const 
+\begin{DoxyCompactList}\small\item\em Sends start signal to all watchdogs. \end{DoxyCompactList}\item 
+bool \hyperlink{classConnectionManager_a5de1e8cab1108e8e35c06df1999887de}{Receive\-W\-D\-Reports} (vector$<$ string $>$ \&reports)
+\begin{DoxyCompactList}\small\item\em Waits to receive reports from all watchdogs returning them to caller as a vector of strings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classConnectionManager_a27ae126e00f864d3eff03a6a847065cb}{Log\-Message} (const string \&msg) const 
+\begin{DoxyCompactList}\small\item\em Appends a message to m\-\_\-logfile and console. \end{DoxyCompactList}\item 
+void \hyperlink{classConnectionManager_aaf8571e8eaba2e0dd529ea08ec0c8f6d}{Remove\-Watchdog} (int fd)
+\begin{DoxyCompactList}\small\item\em Stops tracking a W\-D. \end{DoxyCompactList}\item 
+bool \hyperlink{classConnectionManager_a8d037ebf584dbdef4c4c0dab4819ebea}{Find\-I\-P\-Address} (string \&ip\-Addr) const 
+\begin{DoxyCompactList}\small\item\em Finds an ip address for the desman to use. \end{DoxyCompactList}\item 
+int \hyperlink{classConnectionManager_a358172b9958938e707ef0f61601fbe67}{Initialize\-Socket} () const 
+\begin{DoxyCompactList}\small\item\em Initializes T\-C\-P socket returning sockfd. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classConnectionManager_a58b4c08810ff2c3d2c3ab96883ffcccb}{m\-\_\-num\-Watchdogs}
+\item 
+string \hyperlink{classConnectionManager_a264f750cd43cf4462de3ca17da78d260}{m\-\_\-logfile}
+\item 
+map$<$ int, int $>$ \hyperlink{classConnectionManager_a1ff4d656a7da7080cf53a9ac7496bde5}{m\-\_\-id\-Map}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used by the desman to establish and maintain all connections/communications with watchdog clients. 
+
+Provides an interface between the desman and watchdogs. Public methods provide ability to connect (via T\-C\-P) to watchdogs, send start signal, then listen for reports sent by watchdogs so they can be easily received and processed by desman.
+
+In the event that the connection to a watchdog is lost, the connection mananger will notify the user of the loss and continue to function, receiving future reports from the other watchdogs. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classConnectionManager_a1d24557006d4a5d2745952148d61037e}{\index{Connection\-Manager@{Connection\-Manager}!Connection\-Manager@{Connection\-Manager}}
+\index{Connection\-Manager@{Connection\-Manager}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{Connection\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}Connection\-Manager\-::\-Connection\-Manager (
+\begin{DoxyParamCaption}
+\item[{int}]{num\-W\-Ds, }
+\item[{string}]{logfile}
+\end{DoxyParamCaption}
+)}}\label{classConnectionManager_a1d24557006d4a5d2745952148d61037e}
+
+
+Constructor. 
+
+Initializes \hyperlink{classConnectionManager}{Connection\-Manager} instance with number of watchdogs to connect to and name of file to log to.
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\-W\-Ds} & Number of watchdogs that we'll connect to when \hyperlink{classConnectionManager_aeed94353d6c54ffe670d7d5b7482a6d2}{Establish\-W\-D\-Connections()} is called \\
+\hline
+{\em logfile} & Name of the logfile that relevent info will be logged to \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classConnectionManager_aeed94353d6c54ffe670d7d5b7482a6d2}{\index{Connection\-Manager@{Connection\-Manager}!Establish\-W\-D\-Connections@{Establish\-W\-D\-Connections}}
+\index{Establish\-W\-D\-Connections@{Establish\-W\-D\-Connections}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{Establish\-W\-D\-Connections}]{\setlength{\rightskip}{0pt plus 5cm}bool Connection\-Manager\-::\-Establish\-W\-D\-Connections (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classConnectionManager_aeed94353d6c54ffe670d7d5b7482a6d2}
+
+
+Establishes connection to all watchdogs, returning T\-R\-U\-E after all W\-D's successfully connected. 
+
+First uses \hyperlink{classConnectionManager_a358172b9958938e707ef0f61601fbe67}{Initialize\-Socket()} helper function to acquire and bind to a T\-C\-P socket using the host's local I\-P address. Begins listening on the socket for incoming watchdog connections. Once a watchdog connects, a watchdog I\-D is assigned and mapped to the watchdogs socket file descriptor for future communications. The I\-D is then sent back to that watchdog. The function returns once m\-\_\-num\-Watchdogs watchdogs are successfully connected (or an error occurs).
+
+\begin{DoxyReturn}{Returns}
+T\-R\-U\-E if all watchdogs successfully connected, or F\-A\-L\-S\-E if an error occured. 
+\end{DoxyReturn}
+\hypertarget{classConnectionManager_a8d037ebf584dbdef4c4c0dab4819ebea}{\index{Connection\-Manager@{Connection\-Manager}!Find\-I\-P\-Address@{Find\-I\-P\-Address}}
+\index{Find\-I\-P\-Address@{Find\-I\-P\-Address}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{Find\-I\-P\-Address}]{\setlength{\rightskip}{0pt plus 5cm}bool Connection\-Manager\-::\-Find\-I\-P\-Address (
+\begin{DoxyParamCaption}
+\item[{string \&}]{ip\-\_\-addr}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [private]}}}\label{classConnectionManager_a8d037ebf584dbdef4c4c0dab4819ebea}
+
+
+Finds an ip address for the desman to use. 
+
+Called internally within \hyperlink{classConnectionManager_a358172b9958938e707ef0f61601fbe67}{Initialize\-Socket()} method to determine the local ip of the host machine desman is running on. Uses getifaddrs() to determine the first valid ipv4 address (excluding localhost) and returns it via the ip\-\_\-addr param.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em ip\-\_\-addr} & String containing the host's local ip address in dot-\/quad notation\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+T\-R\-U\-E if local ip was found successfully, otherwise returns F\-A\-L\-S\-E if it couldn't be found or any errors occured 
+\end{DoxyReturn}
+\hypertarget{classConnectionManager_a358172b9958938e707ef0f61601fbe67}{\index{Connection\-Manager@{Connection\-Manager}!Initialize\-Socket@{Initialize\-Socket}}
+\index{Initialize\-Socket@{Initialize\-Socket}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{Initialize\-Socket}]{\setlength{\rightskip}{0pt plus 5cm}int Connection\-Manager\-::\-Initialize\-Socket (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [private]}}}\label{classConnectionManager_a358172b9958938e707ef0f61601fbe67}
+
+
+Initializes T\-C\-P socket returning sockfd. 
+
+Called internally by \hyperlink{classConnectionManager_aeed94353d6c54ffe670d7d5b7482a6d2}{Establish\-W\-D\-Connections()} method. First determines I\-P address to use (via \hyperlink{classConnectionManager_a8d037ebf584dbdef4c4c0dab4819ebea}{Find\-I\-P\-Address()} method), then acquires a T\-C\-P socket from the O\-S and binds to it.
+
+\begin{DoxyReturn}{Returns}
+socket file descriptor of socket that we successfully bound to, or -\/1 if any errors occured. 
+\end{DoxyReturn}
+\hypertarget{classConnectionManager_a27ae126e00f864d3eff03a6a847065cb}{\index{Connection\-Manager@{Connection\-Manager}!Log\-Message@{Log\-Message}}
+\index{Log\-Message@{Log\-Message}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{Log\-Message}]{\setlength{\rightskip}{0pt plus 5cm}void Connection\-Manager\-::\-Log\-Message (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{msg}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [private]}}}\label{classConnectionManager_a27ae126e00f864d3eff03a6a847065cb}
+
+
+Appends a message to m\-\_\-logfile and console. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & The message to be written to m\-\_\-logfile and console. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classConnectionManager_a5de1e8cab1108e8e35c06df1999887de}{\index{Connection\-Manager@{Connection\-Manager}!Receive\-W\-D\-Reports@{Receive\-W\-D\-Reports}}
+\index{Receive\-W\-D\-Reports@{Receive\-W\-D\-Reports}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{Receive\-W\-D\-Reports}]{\setlength{\rightskip}{0pt plus 5cm}bool Connection\-Manager\-::\-Receive\-W\-D\-Reports (
+\begin{DoxyParamCaption}
+\item[{vector$<$ string $>$ \&}]{reports}
+\end{DoxyParamCaption}
+)}}\label{classConnectionManager_a5de1e8cab1108e8e35c06df1999887de}
+
+
+Waits to receive reports from all watchdogs returning them to caller as a vector of strings. 
+
+Should be called in a loop immediately after \hyperlink{classConnectionManager_a25ebd721d4e133f1dfc4141d8ed8071f}{Send\-Start\-Signal()} returns T\-R\-U\-E. Uses the select() function to monitor all incoming messages from watchdogs. Once a report is received from a watchdog, it is logged via the \hyperlink{classConnectionManager_a27ae126e00f864d3eff03a6a847065cb}{Log\-Message()} method. If connection to a watchdog is lost, \hyperlink{classConnectionManager_aaf8571e8eaba2e0dd529ea08ec0c8f6d}{Remove\-Watchdog()} is called causing that watchdog to stop being tracked. The user is notified via console in the event that this occurs. If all watchdogs have disconnected and there are no more reports to receive, this method will return F\-A\-L\-S\-E indicating to the caller that the watchdogs have finished monitoring and the desman can terminate as well.
+
+Once a report is received from each connected watchdog, the reports are returned to the caller in a vector via the reports param.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em reports} & A vector containing the watchdog reports received\\
+\hline
+ & {\em return} & T\-R\-U\-E if at least one watchdog is still connected. F\-A\-L\-S\-E if all watchdogs have disconnected. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classConnectionManager_aaf8571e8eaba2e0dd529ea08ec0c8f6d}{\index{Connection\-Manager@{Connection\-Manager}!Remove\-Watchdog@{Remove\-Watchdog}}
+\index{Remove\-Watchdog@{Remove\-Watchdog}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{Remove\-Watchdog}]{\setlength{\rightskip}{0pt plus 5cm}void Connection\-Manager\-::\-Remove\-Watchdog (
+\begin{DoxyParamCaption}
+\item[{int}]{fd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classConnectionManager_aaf8571e8eaba2e0dd529ea08ec0c8f6d}
+
+
+Stops tracking a W\-D. 
+
+Called internally whenever the connection to a watchdog is lost. Decrements m\-\_\-num\-Watchdogs and removes the entry from m\-\_\-id\-Map. 
+\begin{DoxyParams}{Parameters}
+{\em fd} & the socket file descriptor of the watchdog to remove \\
+\hline
+\end{DoxyParams}
+\hypertarget{classConnectionManager_a25ebd721d4e133f1dfc4141d8ed8071f}{\index{Connection\-Manager@{Connection\-Manager}!Send\-Start\-Signal@{Send\-Start\-Signal}}
+\index{Send\-Start\-Signal@{Send\-Start\-Signal}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{Send\-Start\-Signal}]{\setlength{\rightskip}{0pt plus 5cm}bool Connection\-Manager\-::\-Send\-Start\-Signal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classConnectionManager_a25ebd721d4e133f1dfc4141d8ed8071f}
+
+
+Sends start signal to all watchdogs. 
+
+Should be called after \hyperlink{classConnectionManager_aeed94353d6c54ffe670d7d5b7482a6d2}{Establish\-W\-D\-Connections()} returns T\-R\-U\-E. Simply iterates through m\-\_\-id\-Map sending a message containing \char`\"{}start\char`\"{} to each watchdog.
+
+\begin{DoxyReturn}{Returns}
+T\-R\-U\-E if start signal was successfully sent to each W\-D, or F\-A\-L\-S\-E if any errors occured 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classConnectionManager_a1ff4d656a7da7080cf53a9ac7496bde5}{\index{Connection\-Manager@{Connection\-Manager}!m\-\_\-id\-Map@{m\-\_\-id\-Map}}
+\index{m\-\_\-id\-Map@{m\-\_\-id\-Map}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{m\-\_\-id\-Map}]{\setlength{\rightskip}{0pt plus 5cm}map$<$int, int$>$ Connection\-Manager\-::m\-\_\-id\-Map\hspace{0.3cm}{\ttfamily [private]}}}\label{classConnectionManager_a1ff4d656a7da7080cf53a9ac7496bde5}
+Stores a mapping of watchdog sockfd to watchdog I\-D \hypertarget{classConnectionManager_a264f750cd43cf4462de3ca17da78d260}{\index{Connection\-Manager@{Connection\-Manager}!m\-\_\-logfile@{m\-\_\-logfile}}
+\index{m\-\_\-logfile@{m\-\_\-logfile}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{m\-\_\-logfile}]{\setlength{\rightskip}{0pt plus 5cm}string Connection\-Manager\-::m\-\_\-logfile\hspace{0.3cm}{\ttfamily [private]}}}\label{classConnectionManager_a264f750cd43cf4462de3ca17da78d260}
+The name of the file to log to \hypertarget{classConnectionManager_a58b4c08810ff2c3d2c3ab96883ffcccb}{\index{Connection\-Manager@{Connection\-Manager}!m\-\_\-num\-Watchdogs@{m\-\_\-num\-Watchdogs}}
+\index{m\-\_\-num\-Watchdogs@{m\-\_\-num\-Watchdogs}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{m\-\_\-num\-Watchdogs}]{\setlength{\rightskip}{0pt plus 5cm}int Connection\-Manager\-::m\-\_\-num\-Watchdogs\hspace{0.3cm}{\ttfamily [private]}}}\label{classConnectionManager_a58b4c08810ff2c3d2c3ab96883ffcccb}
+The number of watchdogs currently connected 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/alexander/\-Projects/\-N\-I\-D\-S/src/desman/connection\-\_\-manager.\-h\item 
+/home/alexander/\-Projects/\-N\-I\-D\-S/src/desman/connection\-\_\-manager.\-cpp\end{DoxyCompactItemize}

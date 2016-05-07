@@ -1,0 +1,56 @@
+\hypertarget{structPacketInfo}{\section{Packet\-Info Struct Reference}
+\label{structPacketInfo}\index{Packet\-Info@{Packet\-Info}}
+}
+
+
+Stores all relevant metadata for a single packet.  
+
+
+
+
+{\ttfamily \#include $<$traffic\-\_\-analyzer.\-h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{structPacketInfo_ac4fa3140b956f92ee7e76d325702327a}{size}
+\item 
+string \hyperlink{structPacketInfo_a020c9727f4f766c3927a49af904a1879}{src\-\_\-ip}
+\item 
+string \hyperlink{structPacketInfo_adbaddfdd6f5b8dba9f800026715af8c4}{dst\-\_\-ip}
+\item 
+int \hyperlink{structPacketInfo_a668e7df495d0a55fc1c8f67da13d80a3}{src\-\_\-port}
+\item 
+int \hyperlink{structPacketInfo_a6c7020347474289fb303f39e516d8fb6}{dst\-\_\-port}
+\item 
+string \hyperlink{structPacketInfo_a3a87fd54a7cc270d6156abcb838b23d2}{protocol}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Stores all relevant metadata for a single packet. 
+
+\subsection{Member Data Documentation}
+\hypertarget{structPacketInfo_adbaddfdd6f5b8dba9f800026715af8c4}{\index{Packet\-Info@{Packet\-Info}!dst\-\_\-ip@{dst\-\_\-ip}}
+\index{dst\-\_\-ip@{dst\-\_\-ip}!PacketInfo@{Packet\-Info}}
+\subsubsection[{dst\-\_\-ip}]{\setlength{\rightskip}{0pt plus 5cm}string Packet\-Info\-::dst\-\_\-ip}}\label{structPacketInfo_adbaddfdd6f5b8dba9f800026715af8c4}
+Destination I\-P address in dot-\/quad notation \hypertarget{structPacketInfo_a6c7020347474289fb303f39e516d8fb6}{\index{Packet\-Info@{Packet\-Info}!dst\-\_\-port@{dst\-\_\-port}}
+\index{dst\-\_\-port@{dst\-\_\-port}!PacketInfo@{Packet\-Info}}
+\subsubsection[{dst\-\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}int Packet\-Info\-::dst\-\_\-port}}\label{structPacketInfo_a6c7020347474289fb303f39e516d8fb6}
+Destination port number (0 if packet protocol is not T\-C\-P/\-U\-D\-P) \hypertarget{structPacketInfo_a3a87fd54a7cc270d6156abcb838b23d2}{\index{Packet\-Info@{Packet\-Info}!protocol@{protocol}}
+\index{protocol@{protocol}!PacketInfo@{Packet\-Info}}
+\subsubsection[{protocol}]{\setlength{\rightskip}{0pt plus 5cm}string Packet\-Info\-::protocol}}\label{structPacketInfo_a3a87fd54a7cc270d6156abcb838b23d2}
+Protocol ('T\-C\-P', 'U\-D\-P', 'I\-C\-M\-P', 'I\-P') \hypertarget{structPacketInfo_ac4fa3140b956f92ee7e76d325702327a}{\index{Packet\-Info@{Packet\-Info}!size@{size}}
+\index{size@{size}!PacketInfo@{Packet\-Info}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}int Packet\-Info\-::size}}\label{structPacketInfo_ac4fa3140b956f92ee7e76d325702327a}
+Size of packet in bytes \hypertarget{structPacketInfo_a020c9727f4f766c3927a49af904a1879}{\index{Packet\-Info@{Packet\-Info}!src\-\_\-ip@{src\-\_\-ip}}
+\index{src\-\_\-ip@{src\-\_\-ip}!PacketInfo@{Packet\-Info}}
+\subsubsection[{src\-\_\-ip}]{\setlength{\rightskip}{0pt plus 5cm}string Packet\-Info\-::src\-\_\-ip}}\label{structPacketInfo_a020c9727f4f766c3927a49af904a1879}
+Source I\-P address in dot-\/quad notation \hypertarget{structPacketInfo_a668e7df495d0a55fc1c8f67da13d80a3}{\index{Packet\-Info@{Packet\-Info}!src\-\_\-port@{src\-\_\-port}}
+\index{src\-\_\-port@{src\-\_\-port}!PacketInfo@{Packet\-Info}}
+\subsubsection[{src\-\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}int Packet\-Info\-::src\-\_\-port}}\label{structPacketInfo_a668e7df495d0a55fc1c8f67da13d80a3}
+Source port number (0 if packet protocol is not T\-C\-P/\-U\-D\-P) 
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/alexander/\-Projects/\-N\-I\-D\-S/src/watchdog/traffic\-\_\-analyzer.\-h\end{DoxyCompactItemize}
